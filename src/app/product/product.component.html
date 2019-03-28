@@ -1,0 +1,41 @@
+<div class="container">
+
+    <div class="row">
+        <!-- <h1 appHighlighter>Some Text</h1> -->
+        <h1 appHighlighter [defaultColor]="'green'" [highlightColor]="'red'" >Some Text</h1>
+    </div>
+
+<!-- view child -->
+    <div class="row">
+        <input type="text" #demo>
+        <button (click)="onClick()">Click Me</button>
+    </div>
+<!-- view child -->
+    <div class="row">
+      <!-- <input type="text" #search (keyup)="keyUp(search.value)"  class="form-control" placeholder="Search"> -->
+      <input type="text" #search (keyup)="0"  class="form-control" placeholder="Search"> <!-- for filter to wrok -->
+      <input type="text" #searchEv (keyup)="keyUp2(searchEv.value,$event)" class="form-control" placeholder="Search 2">
+      <input type="number" #pro_id class="form-control" placeholder="Enter ID">
+      <input type="text" #pro_name class="form-control" placeholder="Enter name" >
+      <input type="number" #pro_price class="form-control" placeholder="Enter price">
+      <input type="number" #pro_soh class="form-control" placeholder="Enter soh">
+      <button class="btn btn-primary" (click)="onAddProduct(pro_id.value,pro_name.value,pro_price.value,pro_soh.value)">Add Product</button>
+    </div>
+
+  <div class="row">
+    <div *ngFor="let item of arrProduct | filter:search.value" class="card" style="width: 18rem;">
+        <div class="card-body">
+
+          <h5 class="card-title"
+            [ngClass]="{available:item.pro_soh>0,notavailable:item.pro_soh<=0}">
+              {{item.pro_name}}
+          </h5>
+
+          <h6 class="card-subtitle mb-2 text-muted">{{item.pro_price}}</h6>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="card-link">Card link</a>
+          <a (click)="onDeleteProduct(item)" class="card-link">Delete</a>
+        </div>
+      </div>
+    </div>
+</div>

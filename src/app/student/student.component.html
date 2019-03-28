@@ -1,0 +1,60 @@
+<button class="btn btn-primary" (click)="onAdd()">Add</button>
+<div class="row" *ngIf="flag1;else elseBlock">
+  <h1>hello, if condition is true</h1>
+</div>
+<ng-template #elseBlock>
+  <div class="row" >
+    <h1>hello, if condition is false</h1>
+  </div>
+</ng-template>
+<div class=container>
+<div  *ngIf="!flag">
+  <input type="number" #stu_id placeholder="Enter Student Id" class=form-control><br>
+  <input type="text" appValidator #stu_name placeholder="Enter Student Name" class=form-control><br>
+  <select #city class=form-control>
+    <option value="Ahmedabad">Ahmedabad</option>
+    <option value=Baroda>Baroda</option>
+    <option value=Surat>Surat</option>
+  </select><br>
+  <div class="form-check form-check-inline">
+    <input #attendance class="form-check-input" name=attendance type="radio"  value="Absent" checked>
+    <label class="form-check-label" >Absent</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input #attendance1 class="form-check-input" name="attendance" type="radio" value="Present">
+    <label class="form-check-label" >Present</label>
+  </div><br>
+  <button type="button" class="btn btn-success" (click)="addStudent(stu_id.value,stu_name.value,city.value,attendance.checked?attendance.value:attendance1.value)">Add</button>
+</div>
+</div>
+<br>
+<div class=row>
+  <div class=col-md-3>
+    <input type="text" (keyup)="0" #findstudent class="form-control" placeholder="Search here..">
+  </div>
+  <br>
+  <br>
+
+</div>
+<table class="table">
+  <thead>
+    <th>Id</th>
+    <th>Name</th>
+    <th>City</th>
+    <th>Attendance</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of arrStudent | studentsearch:findstudent.value">
+      <td>{{item.stu_id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.city}}</td>
+      <td>
+        <span [ngClass]="{absentClass: item.attendance=='Absent',presentClass:item.attendance=='Present'}">{{item.attendance}}</span>
+        </td>
+        <td><button type="button" class="btn btn-primary" (click)="onUpdate(item)">Update</button></td>
+          <td><button type="button" class="btn btn-primary" (click)="onDelete(item)">Delete</button>
+        </td>
+    </tr>
+  </tbody>
+</table>
